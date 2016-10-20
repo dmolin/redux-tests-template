@@ -37,7 +37,7 @@ function renderComponent(ComponentClass, props) {
   return TestUtils.renderIntoDocument(<ComponentClass {...props} />)
 }
 
-function findComponentDOM(componentInstance) {
+function getEl(componentInstance) {
   return $(ReactDOM.findDOMNode(componentInstance))
 }
 
@@ -52,6 +52,6 @@ $.fn.simulate = function(eventName, value) {
   TestUtils.Simulate[eventName](this[0]);
 };
 
-export {renderComponent, renderContainer, findComponentDOM, findByType, expect};
+export {renderComponent, renderContainer, getEl, findByType, expect};
 
 
