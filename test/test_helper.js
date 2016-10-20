@@ -45,11 +45,17 @@ function findByType(...args) {
   return TestUtils.findRenderedComponentWithType(...args)
 }
 
-$.fn.simulate = function(eventName, value) {
-  if (value) {
-    this.val(value);
+function isObject(o) {
+  return typeof o === 'object' && o !== null
+}
+
+$.fn.simulate = function(eventName, valueOrConfig) {
+  const isValue = !isObject(valueOrConfig)
+
+  if (isValue) {
+    this.val(valueOrConfig);
   }
-  TestUtils.Simulate[eventName](this[0]);
+  TestUtils.Simulate[eventName](this[0], isValue ? undefined : valueOrConfig);
 };
 
 export {renderComponent, renderContainer, getEl, findByType, expect};
