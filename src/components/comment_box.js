@@ -3,36 +3,42 @@ import React from 'react'
 class CommentBox extends React.Component {
   constructor(...args) {
     super(...args)
-    this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-
-    // use controlled input
-    this.state = {
-      comment: ''
-    }
-  }
-
-  handleChange(ev) {
-    this.setState({comment: ev.target.value })
   }
 
   handleSubmit(ev) {
     ev.preventDefault()
-    this.props.saveComment(this.state.comment)
-    this.setState({comment:''})
+    this.props.saveComment(this.refs.comment.value)
+    this.refs.comment.value = ''
+  }
+
+  componentDidMount() {
+    const len = this.refs.comment.value.length * 2
+    this.refs.comment.setSelectionRange(len,len)
   }
 
   render() {
-    const state = this.state
+    const {comment} = this.props
 
     return (
       <form className='comment-box' onSubmit={this.handleSubmit}>
         <h4>Add a comment</h4>
 
-        <textarea onChange={this.handleChange} value={state.comment}></textarea>
+        <textarea defaultValue={comment} ref='comment'></textarea>
         <div className='comment-actions'><button>Submit comment</button></div>
       </form>
     );
+  }
+}
+
+CommentBox.defaultProps = {
+  comment: ''
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  const {string} = React.PropTypes
+  CommentBox.propTypes = {
+    comment: string
   }
 }
 
