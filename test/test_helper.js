@@ -59,5 +59,3 @@ $.fn.simulate = function(eventName, valueOrConfig) {
 };
 
 export {renderComponent, renderContainer, getEl, findByType, expect};
-
-
